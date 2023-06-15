@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { Input, FormBtn } from './Forma.styled';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contactsSlice';
 import { nanoid } from 'nanoid';
-import { useDispatch } from 'react-redux';
+import { getContacts } from 'redux/selector';
+import { Notify } from 'notiflix';
 
 export const Forma = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const contactsValue = useSelector(state => state.contacts);
+  const contactsValue = useSelector(getContacts);
   const dispatch = useDispatch();
 
   const addContacts = (name, number) => {
@@ -24,7 +25,7 @@ export const Forma = () => {
     event.preventDefault();
     const nameContacts = contactsValue.map(el => el.name.toLowerCase());
     if (nameContacts.includes(name.toLowerCase())) {
-      alert(`${name} is in your contacts`);
+      Notify.info(`${name} is in your contacts`);
     } else {
       addContacts(name, number);
       reset();
