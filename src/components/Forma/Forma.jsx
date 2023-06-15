@@ -1,24 +1,37 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
-import {Input,FormBtn} from "./Forma.styled";
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { Input, FormBtn } from './Forma.styled';
+import { useSelector } from 'react-redux';
+import { addContact } from 'redux/contactsSlice';
+import { nanoid } from 'nanoid';
+import { useDispatch } from 'react-redux';
 
-export const Forma = ({ arr, onSubmit }) => {
+export const Forma = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const contactsValue = useSelector(state => state.contacts);
+  const dispatch = useDispatch();
 
-  const hendleSubmit = event => {
+  const addContacts = (name, number) => {
+    const contact = {
+      id: nanoid(),
+      name,
+      number,
+    };
+    dispatch(addContact(contact));
+  };
+
+  const handleSubmit = event => {
     event.preventDefault();
-    const nameContacts = arr.map(el => el.name.toLowerCase());
+    const nameContacts = contactsValue.map(el => el.name.toLowerCase());
     if (nameContacts.includes(name.toLowerCase())) {
-      Notify.info(`${name} is in your contacts`);
+      alert(`${name} is in your contacts`);
     } else {
-      onSubmit(name, number);
+      addContacts(name, number);
       reset();
     }
   };
 
-  const hendleNameTelChange = event => {
+  const handleNameTelChange = event => {
     const { name, value } = event.currentTarget;
     if (name === 'name') setName(value);
     if (name === 'number') setNumber(value);
@@ -31,7 +44,7 @@ export const Forma = ({ arr, onSubmit }) => {
 
   return (
     <>
-      <form onSubmit={hendleSubmit}>
+      <form onSubmit={handleSubmit}>
         <label>
           Name
           <Input
@@ -41,7 +54,7 @@ export const Forma = ({ arr, onSubmit }) => {
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
             value={name}
-            onChange={hendleNameTelChange}
+            onChange={handleNameTelChange}
           />
         </label>
 
@@ -54,21 +67,11 @@ export const Forma = ({ arr, onSubmit }) => {
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
             value={number}
-            onChange={hendleNameTelChange}
+            onChange={handleNameTelChange}
           />
         </label>
         <FormBtn type="submit">Add contact</FormBtn>
       </form>
     </>
   );
-};
-
-Forma.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  arr: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ),
 };
