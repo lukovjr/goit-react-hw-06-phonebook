@@ -7,9 +7,11 @@ export const Contacts = () => {
   const contactsValue = useSelector(getContacts);
   const filterValue = useSelector(getFilters);
   const dispatch = useDispatch();
-
-  const getVisibleContacts = contactsValue.filter(contacts =>
-    contacts.name.toLowerCase().includes(filterValue.toLowerCase())
+  console.log(contactsValue);
+  
+  
+  const getVisibleContacts = contactsValue.filter(({ name }) =>
+  name.toLowerCase().includes(filterValue.toLowerCase())
   );
 
   const delContact = contactId => {
