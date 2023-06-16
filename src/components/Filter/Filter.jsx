@@ -1,20 +1,19 @@
 import { InputFilter } from './Filter.styled';
-import { useDispatch, useSelector } from 'react-redux';
-import { addValue } from 'redux/filterSlice';
-import { getFilters } from 'redux/selector';
+import { useDispatch } from 'react-redux';
+import { filterContacts } from 'redux/filterSlice';
 
 export const Filter = () => {
-  const filterValue = useSelector(getFilters);
   const dispatch = useDispatch();
 
-  const changeFilter = e => {
-    dispatch(addValue(e.currentTarget.value));
+  const changeFilter  = e => {
+    dispatch(filterContacts(e.target.value));
   };
+
 
   return (
     <label>
       Find contacts by name
-      <InputFilter type="text" value={filterValue} onChange={changeFilter} />
+      <InputFilter type="text" name="filter" onChange={changeFilter } />
     </label>
   );
 };
