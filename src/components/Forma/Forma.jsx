@@ -3,13 +3,12 @@ import { Input, FormBtn } from './Forma.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contactsSlice';
 import { nanoid } from 'nanoid';
-import { getContacts } from 'redux/selector';
 import { Notify } from 'notiflix';
 
 export const Forma = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const contactsValue = useSelector(getContacts);
+  const contactsValue = useSelector(state => state.contacts.contactList);
   const dispatch = useDispatch();
 
   const addContacts = (name, number) => {

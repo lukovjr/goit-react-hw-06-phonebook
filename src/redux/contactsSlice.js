@@ -17,8 +17,10 @@ const contactSlice = createSlice({
     deleteContacts: (state, { payload }) => {
       return (state = state.filter(contact => contact.id !== payload));
     },
-  },
+  }, 
+  
 });
+
 
 export const contactReducer = contactSlice.reducer;
 

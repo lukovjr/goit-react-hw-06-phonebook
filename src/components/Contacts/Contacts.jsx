@@ -1,13 +1,14 @@
 import { ContactsListEl, ContactsList, ContactsBtn } from './Contacts.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteContacts } from 'redux/contactsSlice';
-import { getContacts, getFilters } from 'redux/selector';
+import {  getContacts, getFilters } from 'redux/selector';
 
 export const Contacts = () => {
   const contactsValue = useSelector(getContacts);
   const filterValue = useSelector(getFilters);
   const dispatch = useDispatch();
   console.log(contactsValue);
+  console.log(filterValue);
   
   
   const getVisibleContacts = contactsValue.filter(({ name }) =>
