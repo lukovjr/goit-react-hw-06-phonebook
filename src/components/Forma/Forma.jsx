@@ -19,7 +19,7 @@ export const Forma = () => {
       name: e.target.name.value,
       number: e.target.number.value,
     };
-    if (contacts.find(({ name }) => name === contact.name)) {
+    if (contacts.find(({ name }) => name.toLowerCase() === contact.name.toLowerCase())) {
       Notify.info(`${contact.name} is in your contacts`);
       return;
     }
